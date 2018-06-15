@@ -39,7 +39,9 @@ func main() {
 			}
 		}
 	}
-	e = exec.Command("git", "push", "origin", "master").Run()
+	cmd := exec.Command("git", "push", "origin", "master")
+	cmd.Stdout = os.Stdout
+	e = cmd.Run()
 	if e != nil {
 		fmt.Println("git", "push:", e)
 		return
