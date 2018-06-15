@@ -32,7 +32,7 @@ func countStr(str, s string) int {
 func handleUrl(s string) string {
 	url := s
 	preffix := "https://"
-	if len(url) > len(preffix) && url[:len(preffix)] != preffix {
+	if len(url) > len(preffix) && url[:len(preffix)] != preffix || len(url) <= len(preffix) {
 		url = preffix + url
 	}
 	return url
