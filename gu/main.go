@@ -1,7 +1,7 @@
 package main
 
 import (
-	"bufio"
+	// "bufio"
 	"fmt"
 	"os"
 	"os/exec"
@@ -41,13 +41,20 @@ func main() {
 		}
 	}
 	cmd := exec.Command("git", "push", "origin", "master")
-	stdout, e := cmd.StderrPipe()
-	cmd.Start()
-	scanner := bufio.NewScanner(stdout)
-	scanner.Split(bufio.ScanWords)
-	for scanner.Scan() {
-		txt := scanner.Text()
-		fmt.Println(txt)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	e = cmd.Run()
+	if e != nil {
+		fmt.Println(e)
+		return
 	}
-	cmd.Wait()
+	// stdout, e := cmd.StderrPipe()
+	// cmd.Start()
+	// scanner := bufio.NewScanner(stdout)
+	// scanner.Split(bufio.ScanWords)
+	// for scanner.Scan() {
+	// 	txt := scanner.Text()
+	// 	fmt.Print(txt)
+	// }
+	// cmd.Wait()
 }
