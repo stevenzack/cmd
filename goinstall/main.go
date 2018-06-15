@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+
+	"github.com/StevenZack/tools/strToolkit"
 )
 
 func main() {
@@ -21,10 +23,10 @@ func main() {
 func handleUrl(url string) string {
 	s := url
 	preffix, suffix := "https://", ".git"
-	if len(s) > len(preffix) && s[:len(preffix)] == preffix {
+	if strToolkit.StartsWith(s, preffix) {
 		s = s[len(preffix):]
 	}
-	if len(s) > len(suffix) && s[len(s)-len(suffix):] == suffix {
+	if strToolkit.EndsWith(s, suffix) {
 		s = s[:len(s)-len(suffix)]
 	}
 	return s
