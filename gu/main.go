@@ -19,7 +19,10 @@ func main() {
 	}
 	e = exec.Command("git", "commit", "-m", m).Run()
 	if e != nil {
-		if e.Error() != "exit status 128" {
+		if e.Error() == "exit status 1" {
+			fmt.Println("nothing to commit")
+			return
+		} else if e.Error() != "exit status 128" {
 			fmt.Println("git", "commit:", e)
 			return
 		} else {
