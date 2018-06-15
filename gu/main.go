@@ -41,7 +41,7 @@ func main() {
 		}
 	}
 	cmd := exec.Command("git", "push", "origin", "master")
-	stdout, e := cmd.StdoutPipe()
+	stdout, e := cmd.StderrPipe()
 	cmd.Start()
 	scanner := bufio.NewScanner(stdout)
 	scanner.Split(bufio.ScanWords)
