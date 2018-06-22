@@ -36,7 +36,11 @@ func main() {
 `)
 		f.Close()
 	}
-	e := exec.Command("go", "build", program).Run()
+	cbuild := exec.Command("go", "build", program)
+	cbuild.Stderr = os.Stderr
+	cbuild.Stdout = os.Stdout
+	cbuild.Stdin = os.Stdin
+	e := cbuild.Run()
 	if e != nil {
 		fmt.Println(e)
 		return
