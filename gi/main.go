@@ -3,10 +3,12 @@ package main
 import (
 	"fmt"
 	"github.com/StevenZack/cmd"
+	"os"
 )
 
 func main() {
-	e := cmd.NewCmd("go", "run", "-tags", "gtk_3_18", "main.go").Run()
+	args := append([]string{"install", "-tags", "gtk_3_18"}, os.Args[1:]...)
+	e := cmd.NewCmd("go", args...).Run()
 	if e != nil {
 		fmt.Println(e)
 		return

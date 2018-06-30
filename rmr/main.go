@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
+	"github.com/StevenZack/cmd"
 	"os"
-	"os/exec"
 )
 
 func main() {
 	args := os.Args
 	args[0] = "-Rf"
-	e := exec.Command("rm", args...).Run()
+	e := cmd.NewCmd("rm", args...).Run()
 	if e != nil {
 		fmt.Println(e)
 		return

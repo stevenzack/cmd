@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/StevenZack/cmd"
 	"os"
-	"os/exec"
 )
 
 func main() {
@@ -13,10 +13,7 @@ func main() {
 	}
 	args := os.Args
 	args[0] = "-w"
-	c := exec.Command("goimports", args...)
-	c.Stdin = os.Stdin
-	c.Stdout = os.Stdout
-	e := c.Run()
+	e := cmd.NewCmd("goimports", args...).Run()
 	if e != nil {
 		fmt.Println(e)
 		return

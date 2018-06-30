@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/StevenZack/cmd"
 	"github.com/StevenZack/tools/fileToolkit"
 	"os"
-	"os/exec"
 )
 
 func main() {
@@ -36,16 +36,12 @@ func main() {
 `)
 		f.Close()
 	}
-	cbuild := exec.Command("go", "build", program)
-	cbuild.Stderr = os.Stderr
-	cbuild.Stdout = os.Stdout
-	cbuild.Stdin = os.Stdin
-	e := cbuild.Run()
+	e := cmd.NewCmd("go", "build", program).Run()
 	if e != nil {
 		fmt.Println(e)
 		return
 	}
-	e = exec.Command(name + ".exe").Run()
+	e = cmd.NewCmd(name + ".exe").Run()
 	if e != nil {
 		fmt.Println(e)
 		return

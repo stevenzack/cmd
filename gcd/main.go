@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/StevenZack/cmd"
 	"os"
-	"os/exec"
 )
 
 func main() {
@@ -14,7 +14,7 @@ func main() {
 
 	url := os.Args[1]
 	url = handleUrl(url)
-	e := exec.Command("git", "clone", "--depth=1", url).Run()
+	e := cmd.NewCmd("git", "clone", "--depth=1", url).Run()
 	if e != nil {
 		fmt.Println(e)
 		return
