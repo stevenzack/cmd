@@ -1,14 +1,30 @@
 package main
 
 import (
+	"github.com/StevenZack/tools/strToolkit"
+	"io/ioutil"
 	"fmt"
-	"github.com/StevenZack/cmd"
 	"os"
+
+	"github.com/StevenZack/cmd"
 )
 
 func main() {
 	if len(os.Args) < 2 {
-		fmt.Println("no enough args")
+		ls,e:=ioutil.ReadDir(".")
+		if e!=nil{
+		fmt.Println(`read dir error:`,e)
+		return
+		}
+		for _,l:=range ls{
+			if strToolkit.EndsWith(l.Name(), ".go"){
+				e:=cmd.NewCmd("goimports", "-w",l.Name()).Run()
+				if e!=nil{
+				fmt.Println(`run cmd error:`,e)
+				return
+				}
+			}
+		}
 		return
 	}
 	args := os.Args
