@@ -1,11 +1,10 @@
 package main
 
 import (
-	"github.com/StevenZack/tools/strToolkit"
 	"io/ioutil"
 	"fmt"
 	"os"
-
+	"strings"
 	"github.com/StevenZack/cmd"
 )
 
@@ -17,7 +16,7 @@ func main() {
 		return
 		}
 		for _,l:=range ls{
-			if strToolkit.EndsWith(l.Name(), ".go"){
+			if strings.HasSuffix(l.Name(), ".go"){
 				e:=cmd.NewCmd("goimports", "-w",l.Name()).Run()
 				if e!=nil{
 				fmt.Println(`run cmd error:`,e)
