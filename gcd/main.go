@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/StevenZack/cmd"
 	"os"
+	"strings"
+
+	"github.com/StevenZack/cmd"
 )
 
 func main() {
@@ -31,9 +33,10 @@ func countStr(str, s string) int {
 }
 func handleUrl(s string) string {
 	url := s
-	preffix := "https://"
-	if len(url) > len(preffix) && url[:len(preffix)] != preffix || len(url) <= len(preffix) {
-		url = preffix + url
+	prefix := "https://"
+	prefix2 := "http://"
+	if strings.HasPrefix(url, prefix) || strings.HasPrefix(s, prefix2) {
+		return url
 	}
-	return url
+	return prefix + url
 }
