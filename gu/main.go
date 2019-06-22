@@ -3,19 +3,22 @@ package main
 import (
 	"github.com/StevenZack/cmd"
 	// "bufio"
+	"flag"
 	"fmt"
-	"os"
 )
 
+var branch = flag.String("b", "master", "branch")
+
 func main() {
+	flag.Parse()
 	e := cmd.NewCmd("git", "add", "--all").Run()
 	if e != nil {
 		fmt.Println("git", "add:", e)
 		return
 	}
 	m := "Just a Backup"
-	if len(os.Args) > 1 {
-		m = os.Args[1]
+	if len(flag.Args()) > 0 {
+		m = flag.Arg(0)
 	}
 	e = cmd.NewCmd("git", "commit", "-m", m).Run()
 	if e != nil {
@@ -43,7 +46,7 @@ func main() {
 			}
 		}
 	}
-	e = cmd.NewCmd("git", "push", "origin", "master").Run()
+	e = cmd.NewCmd("git", "push", "origin", *branch).Run()
 	if e != nil {
 		fmt.Println(e)
 		return
