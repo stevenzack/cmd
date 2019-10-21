@@ -73,7 +73,7 @@ func main() {
 				oldRepo := modDir + website + sep + user + sep + repoWithVersion
 				e = copyDir(oldRepo, relativeRepo)
 				if e != nil {
-					fmt.Println("run cp -r error :", e," src=",oldRepo," dst=",relativeRepo)
+					fmt.Println("run cp -r error :", e, " src=", oldRepo, " dst=", relativeRepo)
 					return
 				}
 
@@ -85,7 +85,8 @@ func main() {
 
 func copyDir(src, dst string) error {
 	if runtime.GOOS == "windows" {
-		return ioToolkit.RunAttachedCmd("robocopy", "/E", src, dst)
+		ioToolkit.RunAttachedCmd("robocopy", "/E", src, dst)
+		return nil
 	}
 	return ioToolkit.RunAttachedCmd("cp", "-r", src, dst)
 }
