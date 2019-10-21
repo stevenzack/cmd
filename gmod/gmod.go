@@ -73,7 +73,7 @@ func main() {
 				oldRepo := modDir + website + sep + user + sep + repoWithVersion
 				e = copyDir(oldRepo, relativeRepo)
 				if e != nil {
-					fmt.Println("run cp -r error :", e)
+					fmt.Println("run cp -r error :", e," src=",oldRepo," dst=",relativeRepo)
 					return
 				}
 
