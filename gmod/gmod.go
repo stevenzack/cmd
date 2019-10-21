@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -92,11 +93,11 @@ func listDirs(root string) ([]string, error) {
 }
 
 func getRelativePath(website, user, repo string) (string, error) {
-	parentDir := gopath + website + sep + user
+	parentDir := gopath + "src" + sep + website + sep + user
 
 	e := os.MkdirAll(parentDir, 0755)
 	if e != nil {
-		return "", e
+		return "", errors.New("mkdirs failed:" + e.Error())
 	}
 
 	relativePath := parentDir + sep + repo
@@ -105,7 +106,11 @@ func getRelativePath(website, user, repo string) (string, error) {
 		return relativePath, nil
 	}
 	e = os.RemoveAll(relativePath)
-	return relativePath, e
+	if e != nil {
+
+		return "", errors.New("removeAll failed:" + e.Error())
+	}
+	return relativePath, nil
 }
 
 func getRepoName(repo string) string {
