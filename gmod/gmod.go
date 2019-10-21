@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"os/exec"
 	"runtime"
 	"strings"
 
@@ -85,7 +86,7 @@ func main() {
 
 func copyDir(src, dst string) error {
 	if runtime.GOOS == "windows" {
-		ioToolkit.RunAttachedCmd("robocopy", "/E", src, dst)
+		exec.Command("robocopy", "/E", src, dst).Run()
 		return nil
 	}
 	return ioToolkit.RunAttachedCmd("cp", "-r", src, dst)
