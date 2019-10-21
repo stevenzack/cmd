@@ -105,9 +105,8 @@ func getRelativePath(website, user, repo string) (string, error) {
 	if os.ErrNotExist == e {
 		return relativePath, nil
 	}
-	e = os.RemoveAll(relativePath)
+	e = ioToolkit.RunAttachedCmd("rm", "-Rf", relativePath)
 	if e != nil {
-
 		return "", errors.New("removeAll failed:" + e.Error())
 	}
 	return relativePath, nil
