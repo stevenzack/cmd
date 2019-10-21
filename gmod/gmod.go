@@ -105,6 +105,12 @@ func getRelativePath(website, user, repo string) (string, error) {
 	if os.ErrNotExist == e {
 		return relativePath, nil
 	}
+
+	e = ioToolkit.RunAttachedCmd("chmod", "-R", "777", relativePath)
+	if e != nil {
+		fmt.Println("chmod error :", e)
+		return "", e
+	}
 	e = ioToolkit.RunAttachedCmd("rm", "-Rf", relativePath)
 	if e != nil {
 		return "", errors.New("removeAll failed:" + e.Error())
