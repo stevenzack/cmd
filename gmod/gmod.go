@@ -107,7 +107,7 @@ func getRelativePath(website, user, repo string) (string, error) {
 
 	relativePath := parentDir + sep + repo
 	_, e = os.Stat(relativePath)
-	if os.ErrNotExist == e {
+	if os.IsNotExist(e) {
 		return relativePath, nil
 	}
 	if e != nil {
