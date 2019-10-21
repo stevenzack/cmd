@@ -86,7 +86,7 @@ func main() {
 
 func copyDir(src, dst string) error {
 	if runtime.GOOS == "windows" {
-		return exec.Command("robocopy", "/E", src, dst).Run()
+		return ioToolkit.RunAttachedCmd("robocopy", "/E", src, dst)
 	}
 	return ioToolkit.RunAttachedCmd("cp", "-r", src, dst)
 }
