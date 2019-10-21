@@ -110,6 +110,10 @@ func getRelativePath(website, user, repo string) (string, error) {
 	if os.ErrNotExist == e {
 		return relativePath, nil
 	}
+	if e != nil {
+		fmt.Println("stat file failed:", e)
+		return "", e
+	}
 	return "", nil
 }
 
