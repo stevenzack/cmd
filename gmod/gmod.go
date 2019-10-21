@@ -53,13 +53,17 @@ func main() {
 			}
 
 			for _, repoWithVersion := range repos {
+				if strings.HasPrefix(repoWithVersion, ".") {
+					continue
+				}
+
 				repo := getRepoName(repoWithVersion)
 				relativeRepo, e := getRelativePath(website, user, repo)
 				if e != nil {
 					fmt.Println("get relative path error :", e)
 					return
 				}
-				oldRepo := modDir + website + sep + user + sep + repo
+				oldRepo := modDir + website + sep + user + sep + repoWithVersion
 				e = ioToolkit.RunAttachedCmd("cp", "-r", oldRepo, relativeRepo)
 				if e != nil {
 					fmt.Println("run cp -r error :", e)
