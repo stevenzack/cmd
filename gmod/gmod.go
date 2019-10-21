@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"os/exec"
+	"runtime"
 	"strings"
 
 	"github.com/StevenZack/tools/fileToolkit"
@@ -70,7 +72,7 @@ func main() {
 				}
 
 				oldRepo := modDir + website + sep + user + sep + repoWithVersion
-				e = ioToolkit.RunAttachedCmd("cp", "-r", oldRepo, relativeRepo)
+				e = copyDir(oldRepo, relativeRepo)
 				if e != nil {
 					fmt.Println("run cp -r error :", e)
 					return
@@ -80,6 +82,13 @@ func main() {
 			}
 		}
 	}
+}
+
+func copyDir(src, dst string) error {
+	if runtime.GOOS == "windows" {
+		return exec.Command("robocopy", "/E", src, dst).Run()
+	}
+	return ioToolkit.RunAttachedCmd("cp", "-r", src, dst)
 }
 
 func listDirs(root string) ([]string, error) {
