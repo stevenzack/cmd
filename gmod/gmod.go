@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 	"os/exec"
 	"runtime"
@@ -20,6 +21,8 @@ var (
 )
 
 func main() {
+	log.SetFlags(log.Lshortfile)
+
 	gopath = strToolkit.Getrpath(os.Getenv("GOPATH"))
 	if gopath == "" {
 		gopath = strToolkit.Getrpath(fileToolkit.GetHomeDir())
@@ -29,7 +32,7 @@ func main() {
 
 	websiteList, e := listDirs(modDir)
 	if e != nil {
-		fmt.Println("list modDir error :", e)
+		log.Println(e)
 		return
 	}
 
@@ -40,18 +43,15 @@ func main() {
 
 		userList, e := listDirs(modDir + website)
 		if e != nil {
-			fmt.Println("list website error :", e)
+			log.Println(e)
 			return
 		}
 
 		for _, user := range userList {
-			if strings.HasPrefix(user, "!") {
-				continue
-			}
 
 			repos, e := listDirs(modDir + website + sep + user)
 			if e != nil {
-				fmt.Println("list repo error :", e)
+				log.Println(e)
 				return
 			}
 
@@ -63,7 +63,7 @@ func main() {
 				repo := getRepoName(repoWithVersion)
 				relativeRepo, e := getRelativePath(website, user, repo)
 				if e != nil {
-					fmt.Println("get relative path error :", e)
+					log.Println(e)
 					return
 				}
 
@@ -74,7 +74,7 @@ func main() {
 				oldRepo := modDir + website + sep + user + sep + repoWithVersion
 				e = copyDir(oldRepo, relativeRepo)
 				if e != nil {
-					fmt.Println("run cp -r error :", e, " src=", oldRepo, " dst=", relativeRepo)
+					log.Println(e)
 					return
 				}
 
@@ -82,6 +82,24 @@ func main() {
 			}
 		}
 	}
+}
+
+func translateUpperCase(s string) string {
+	rp := ""
+	upperCase := false
+	for i := 0; i < len(s); i++ {
+		if s[i:i+1] == "!" {
+			upperCase = true
+			continue
+		}
+		v := s[i : i+1]
+		if upperCase {
+			v = strToolkit.ToUpper(v)
+			upperCase = false
+		}
+		rp += v
+	}
+	return rp
 }
 
 func copyDir(src, dst string) error {
@@ -96,6 +114,7 @@ func listDirs(root string) ([]string, error) {
 	dirs := []string{}
 	infos, e := ioutil.ReadDir(root)
 	if e != nil {
+		log.Println(e)
 		return nil, e
 	}
 
@@ -108,7 +127,7 @@ func listDirs(root string) ([]string, error) {
 }
 
 func getRelativePath(website, user, repo string) (string, error) {
-	parentDir := gopath + "src" + sep + website + sep + user
+	parentDir := gopath + "src" + sep + website + sep + translateUpperCase(user)
 
 	e := os.MkdirAll(parentDir, 0755)
 	if e != nil {
@@ -121,9 +140,10 @@ func getRelativePath(website, user, repo string) (string, error) {
 		return relativePath, nil
 	}
 	if e != nil {
-		fmt.Println("stat file failed:", e)
+		log.Println(e)
 		return "", e
 	}
+
 	return "", nil
 }
 
