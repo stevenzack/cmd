@@ -134,7 +134,7 @@ func getRelativePath(website, user, repo string) (string, error) {
 		return "", errors.New("mkdirs failed:" + e.Error())
 	}
 
-	relativePath := parentDir + sep + repo
+	relativePath := parentDir + sep + translateUpperCase(repo)
 	_, e = os.Stat(relativePath)
 	if os.IsNotExist(e) {
 		return relativePath, nil
