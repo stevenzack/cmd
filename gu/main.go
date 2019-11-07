@@ -46,7 +46,7 @@ func main() {
 			}
 		}
 	}
-	e = cmd.NewCmd("git", "push", "origin", *branch).Run()
+	e = cmd.NewCmd("git", "push").Run()
 	if e != nil {
 		fmt.Println(e)
 		return
