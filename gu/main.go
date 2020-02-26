@@ -46,7 +46,7 @@ func main() {
 			}
 		}
 	}
-	e = cmd.NewCmd("git", "push").Run()
+	e = cmd.NewCmd("git", "push","--tags").Run()
 	if e != nil {
 		fmt.Println(e)
 		return

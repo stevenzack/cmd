@@ -85,7 +85,7 @@ func main() {
 }
 
 func translateUpperCase(s string) string {
-	s = strToolkit.SubBefore(s, "@v")
+	s = strToolkit.SubBefore(s, "@v", s)
 	rp := ""
 	upperCase := false
 	for i := 0; i < len(s); i++ {
