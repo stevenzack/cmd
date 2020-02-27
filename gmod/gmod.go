@@ -128,7 +128,7 @@ func listDirs(root string) ([]string, error) {
 }
 
 func getRelativePath(website, user, repo string) (string, error) {
-	parentDir := gopath + "src" + sep + website + sep + translateUpperCase(user)
+	parentDir := gopath + "src" + sep + translateUpperCase(website) + sep + translateUpperCase(user)
 
 	e := os.MkdirAll(parentDir, 0755)
 	if e != nil {
