@@ -73,7 +73,7 @@ func handleFile(path string) {
 	lines := strings.Split(content, "\n")
 	for _, line := range lines {
 		if strToolkit.HasChinese(line) {
-			fmt.Println(path[len(wd):], ":", strToolkit.TrimBoth(line, " ", "\t"))
+			fmt.Println(path[len(wd)+1:], ":", strToolkit.TrimBoth(line, " ", "\t"))
 			if !*v {
 				return
 			}
