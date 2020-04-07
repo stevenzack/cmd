@@ -2,12 +2,15 @@ package main
 
 import (
 	"github.com/StevenZack/cmd"
+	"github.com/StevenZack/tools/ioToolkit"
+
 	// "bufio"
 	"flag"
 	"fmt"
 )
 
 var branch = flag.String("b", "master", "branch")
+var tag = flag.String("t", "", "Add tag")
 
 func main() {
 	flag.Parse()
@@ -22,28 +25,16 @@ func main() {
 	}
 	e = cmd.NewCmd("git", "commit", "-m", m).Run()
 	if e != nil {
-		if e.Error() == "exit status 1" {
-			fmt.Println("nothing to commit")
+		fmt.Println(e)
+		return
+	}
+
+	//tag
+	if *tag != "" {
+		e = ioToolkit.RunAttachedCmd("git", "tag", "-a", *tag, "-m", m)
+		if e != nil {
+			fmt.Println("add tag error :", e)
 			return
-		} else if e.Error() != "exit status 128" {
-			fmt.Println("git", "commit:", e)
-			return
-		} else {
-			e = cmd.NewCmd("git", "config", "--global", "user.email", "stevenzack@qq.com").Run()
-			if e != nil {
-				fmt.Println("git", "config", "--global", "user.email:", e)
-				return
-			}
-			e = cmd.NewCmd("git", "config", "--global", "user.name", "StevenZack").Run()
-			if e != nil {
-				fmt.Println("git", "config", "--global", "user.name:", e)
-				return
-			}
-			e = cmd.NewCmd("git", "config", "--global", "credential.helper", "store").Run()
-			if e != nil {
-				fmt.Println("credential.helper:", e)
-				return
-			}
 		}
 	}
 
