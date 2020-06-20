@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"github.com/StevenZack/tools/strToolkit"
@@ -71,9 +72,9 @@ func handleFile(path string) {
 		log.Fatal(e)
 	}
 	lines := strings.Split(content, "\n")
-	for _, line := range lines {
+	for i, line := range lines {
 		if strToolkit.HasChinese(line) {
-			fmt.Println(path[len(wd)+1:], ":", strToolkit.TrimBoth(line, " ", "\t"))
+			fmt.Println(path[len(wd)+1:]+":"+strconv.Itoa(i+1), ":", strToolkit.TrimBoth(line, " ", "\t"))
 			if !*v {
 				return
 			}
