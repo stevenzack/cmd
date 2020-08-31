@@ -95,7 +95,7 @@ func translateUpperCase(s string) string {
 		}
 		v := s[i : i+1]
 		if upperCase {
-			v = strToolkit.ToUpper(v)
+			v = strings.ToUpper(v)
 			upperCase = false
 		}
 		rp += v
