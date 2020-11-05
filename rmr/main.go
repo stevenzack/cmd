@@ -2,14 +2,15 @@ package main
 
 import (
 	"fmt"
-	"github.com/StevenZack/cmd"
 	"os"
+
+	"github.com/StevenZack/tools/cmdToolkit"
 )
 
 func main() {
 	args := os.Args
 	args[0] = "-Rf"
-	e := cmd.NewCmd("rm", args...).Run()
+	_, e := cmdToolkit.Run("rm", args...)
 	if e != nil {
 		fmt.Println(e)
 		return

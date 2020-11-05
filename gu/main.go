@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/StevenZack/cmd"
+	"github.com/StevenZack/tools/cmdToolkit"
 	"github.com/StevenZack/tools/ioToolkit"
 
 	// "bufio"
@@ -14,7 +14,7 @@ var tag = flag.String("t", "", "Add tag")
 
 func main() {
 	flag.Parse()
-	e := cmd.NewCmd("git", "add", "--all").Run()
+	_, e := cmdToolkit.Run("git", "add", "--all")
 	if e != nil {
 		fmt.Println("git", "add:", e)
 		return
@@ -23,7 +23,7 @@ func main() {
 	if len(flag.Args()) > 0 {
 		m = flag.Arg(0)
 	}
-	e = cmd.NewCmd("git", "commit", "-m", m).Run()
+	_, e = cmdToolkit.Run("git", "commit", "-m", m)
 	if e != nil {
 		fmt.Println(e)
 		return
@@ -38,12 +38,12 @@ func main() {
 		}
 	}
 
-	e = cmd.NewCmd("git", "push").Run()
+	_, e = cmdToolkit.Run("git", "push")
 	if e != nil {
 		fmt.Println(e)
 		return
 	}
-	e = cmd.NewCmd("git", "push", "--tags").Run()
+	_, e = cmdToolkit.Run("git", "push", "--tags")
 	if e != nil {
 		fmt.Println(e)
 		return

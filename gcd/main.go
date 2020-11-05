@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/StevenZack/cmd"
+	"github.com/StevenZack/tools/cmdToolkit"
 )
 
 func main() {
@@ -16,7 +16,7 @@ func main() {
 
 	url := os.Args[1]
 	url = handleUrl(url)
-	e := cmd.NewCmd("git", "clone", "--depth=1", url).Run()
+	_, e := cmdToolkit.Run("git", "clone", "--depth=1", url)
 	if e != nil {
 		fmt.Println(e)
 		return
