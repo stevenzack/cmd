@@ -10,8 +10,8 @@ import (
 	"runtime"
 	"strings"
 
+	"github.com/StevenZack/cmd"
 	"github.com/StevenZack/tools/fileToolkit"
-	"github.com/StevenZack/tools/ioToolkit"
 	"github.com/StevenZack/tools/strToolkit"
 )
 
@@ -108,7 +108,7 @@ func copyDir(src, dst string) error {
 		exec.Command("robocopy", "/E", src, dst).Run()
 		return nil
 	}
-	return ioToolkit.RunAttachedCmd("cp", "-r", src, dst)
+	return cmd.RunAttach("cp", "-r", src, dst)
 }
 
 func listDirs(root string) ([]string, error) {

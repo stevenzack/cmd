@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/StevenZack/tools/ioToolkit"
+	"github.com/StevenZack/cmd"
 )
 
 func main() {
@@ -12,7 +12,7 @@ func main() {
 	if len(os.Args) > 1 {
 		args = append(args, "-run="+os.Args[1])
 	}
-	e := ioToolkit.RunAttachedCmd("go", append([]string{"test", "-v"}, args...)...)
+	e := cmd.RunAttach("go", append([]string{"test", "-v"}, args...)...)
 	if e != nil {
 		log.Fatal(e)
 	}

@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/StevenZack/tools/cmdToolkit"
+	"github.com/StevenZack/cmd"
 )
 
 func main() {
 	args := os.Args
 	args[0] = "-Rf"
-	_, e := cmdToolkit.Run("rm", args...)
+	e := cmd.RunAttach("rm", args...)
 	if e != nil {
 		fmt.Println(e)
 		return

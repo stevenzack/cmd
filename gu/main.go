@@ -1,12 +1,10 @@
 package main
 
 import (
-	"github.com/StevenZack/tools/cmdToolkit"
-	"github.com/StevenZack/tools/ioToolkit"
-
-	// "bufio"
 	"flag"
 	"fmt"
+
+	"github.com/StevenZack/cmd"
 )
 
 var branch = flag.String("b", "master", "branch")
@@ -14,7 +12,7 @@ var tag = flag.String("t", "", "Add tag")
 
 func main() {
 	flag.Parse()
-	_, e := cmdToolkit.Run("git", "add", "--all")
+	e := cmd.RunAttach("git", "add", "--all")
 	if e != nil {
 		fmt.Println("git", "add:", e)
 		return
@@ -23,7 +21,7 @@ func main() {
 	if len(flag.Args()) > 0 {
 		m = flag.Arg(0)
 	}
-	_, e = cmdToolkit.Run("git", "commit", "-m", m)
+	e = cmd.RunAttach("git", "commit", "-m", m)
 	if e != nil {
 		fmt.Println(e)
 		return
@@ -31,19 +29,19 @@ func main() {
 
 	//tag
 	if *tag != "" {
-		e = ioToolkit.RunAttachedCmd("git", "tag", "-a", *tag, "-m", m)
+		e = cmd.RunAttach("git", "tag", "-a", *tag, "-m", m)
 		if e != nil {
 			fmt.Println("add tag error :", e)
 			return
 		}
 	}
 
-	_, e = cmdToolkit.Run("git", "push")
+	e = cmd.RunAttach("git", "push")
 	if e != nil {
 		fmt.Println(e)
 		return
 	}
-	_, e = cmdToolkit.Run("git", "push", "--tags")
+	e = cmd.RunAttach("git", "push", "--tags")
 	if e != nil {
 		fmt.Println(e)
 		return

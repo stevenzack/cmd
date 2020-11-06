@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 
-	"github.com/StevenZack/tools/ioToolkit"
+	"github.com/StevenZack/cmd"
 )
 
 func main() {
-	e := ioToolkit.RunAttachedCmd("git", "status")
+	e := cmd.RunAttach("git", "status")
 	if e != nil {
 		fmt.Println("run error :", e)
 		return
