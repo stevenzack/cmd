@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"runtime"
 	"strings"
 
@@ -16,7 +17,6 @@ import (
 )
 
 var (
-	sep    = string(os.PathSeparator)
 	gopath = ""
 )
 
@@ -25,10 +25,10 @@ func main() {
 
 	gopath = strToolkit.Getrpath(os.Getenv("GOPATH"))
 	if gopath == "" {
-		gopath = strToolkit.Getrpath(fileToolkit.GetHomeDir())
+		gopath = filepath.Join(fileToolkit.GetHomeDir(), "go")
 	}
 
-	modDir := gopath + "pkg/mod/"
+	modDir := filepath.Join(gopath, "pkg/mod/")
 
 	websiteList, e := listDirs(modDir)
 	if e != nil {
@@ -41,7 +41,7 @@ func main() {
 			continue
 		}
 
-		userList, e := listDirs(modDir + website)
+		userList, e := listDirs(filepath.Join(modDir, website))
 		if e != nil {
 			log.Println(e)
 			return
@@ -49,7 +49,7 @@ func main() {
 
 		for _, user := range userList {
 
-			repos, e := listDirs(modDir + website + sep + user)
+			repos, e := listDirs(filepath.Join(modDir, website, user))
 			if e != nil {
 				log.Println(e)
 				return
@@ -71,14 +71,15 @@ func main() {
 					continue
 				}
 
-				oldRepo := modDir + website + sep + user + sep + repoWithVersion
+				// oldRepo := modDir + website + sep + user + sep + repoWithVersion
+				oldRepo := filepath.Join(modDir, website, user, repoWithVersion)
 				e = copyDir(oldRepo, relativeRepo)
 				if e != nil {
 					log.Println(e)
 					return
 				}
 
-				fmt.Println(website + sep + user + sep + repo)
+				fmt.Println(filepath.Join(website, user, repo))
 			}
 		}
 	}
@@ -128,14 +129,14 @@ func listDirs(root string) ([]string, error) {
 }
 
 func getRelativePath(website, user, repo string) (string, error) {
-	parentDir := gopath + "src" + sep + translateUpperCase(website) + sep + translateUpperCase(user)
+	parentDir := filepath.Join(gopath, "src", translateUpperCase(website), translateUpperCase(user))
 
 	e := os.MkdirAll(parentDir, 0755)
 	if e != nil {
 		return "", errors.New("mkdirs failed:" + e.Error())
 	}
 
-	relativePath := parentDir + sep + translateUpperCase(repo)
+	relativePath := filepath.Join(parentDir, translateUpperCase(repo))
 	_, e = os.Stat(relativePath)
 	if os.IsNotExist(e) {
 		return relativePath, nil
