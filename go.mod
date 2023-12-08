@@ -1,4 +1,4 @@
-module github.com/StevenZack/cmd
+module github.com/stevenzack/cmd
 
 go 1.15
 
