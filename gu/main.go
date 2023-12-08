@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/StevenZack/cmd"
+	"github.com/stevenzack/cmd"
 )
 
 var branch = flag.String("b", "master", "branch")

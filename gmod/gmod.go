@@ -11,9 +11,9 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/StevenZack/cmd"
-	"github.com/StevenZack/tools/fileToolkit"
-	"github.com/StevenZack/tools/strToolkit"
+	"github.com/stevenzack/cmd"
+	"github.com/stevenzack/tools/fileToolkit"
+	"github.com/stevenzack/tools/strToolkit"
 )
 
 var (

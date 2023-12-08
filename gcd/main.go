@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/StevenZack/cmd"
+	"github.com/stevenzack/cmd"
 )
 
 func main() {

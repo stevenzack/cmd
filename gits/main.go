@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/StevenZack/cmd"
+	"github.com/stevenzack/cmd"
 )
 
 func main() {

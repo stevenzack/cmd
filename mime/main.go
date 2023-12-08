@@ -5,7 +5,7 @@ import (
 	"mime"
 	"os"
 
-	"github.com/StevenZack/tools/strToolkit"
+	"github.com/stevenzack/tools/strToolkit"
 )
 
 func main() {
