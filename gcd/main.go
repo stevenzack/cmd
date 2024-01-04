@@ -16,11 +16,27 @@ func main() {
 
 	url := os.Args[1]
 	url = handleUrl(url)
-	e := tools.RunAttach("git", "clone", "--depth=1", url)
+	var args []string
+	if len(os.Args) > 2 {
+		args = os.Args[2:]
+	}
+	if !containsDepth(args) {
+		args = append(args, "--depth=1")
+	}
+	args = append([]string{"clone", url}, args...)
+	e := tools.RunAttach("git", args...)
 	if e != nil {
 		fmt.Println(e)
 		return
 	}
+}
+func containsDepth(args []string) bool {
+	for _, v := range args {
+		if strings.Contains(v, "depth") {
+			return true
+		}
+	}
+	return false
 }
 func handleUrl(s string) string {
 	url := s
