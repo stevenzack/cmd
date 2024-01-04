@@ -1,5 +1,3 @@
 module github.com/stevenzack/cmd
 
-go 1.15
-
-require github.com/stevenzack/tools v1.17.0
+go 1.22rc1

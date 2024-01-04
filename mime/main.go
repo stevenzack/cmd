@@ -4,11 +4,12 @@ import (
 	"fmt"
 	"mime"
 	"os"
-
-	"github.com/stevenzack/tools/strToolkit"
+	"path/filepath"
+	"strings"
 )
 
 func main() {
-	fmt.Println(os.Args[1])
-	fmt.Println(mime.TypeByExtension("." + strToolkit.TrimStart(os.Args[1], ".")))
+	a := filepath.Ext(os.Args[1])
+	fmt.Println(a)
+	fmt.Println(mime.TypeByExtension("." + strings.TrimPrefix(a, ".")))
 }

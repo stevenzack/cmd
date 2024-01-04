@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/stevenzack/cmd"
+	"github.com/stevenzack/cmd/tools"
 )
 
 var branch = flag.String("b", "master", "branch")
@@ -12,7 +12,7 @@ var tag = flag.String("t", "", "Add tag")
 
 func main() {
 	flag.Parse()
-	e := cmd.RunAttach("git", "add", "--all")
+	e := tools.RunAttach("git", "add", "--all")
 	if e != nil {
 		fmt.Println("git", "add:", e)
 		return
@@ -21,7 +21,7 @@ func main() {
 	if len(flag.Args()) > 0 {
 		m = flag.Arg(0)
 	}
-	e = cmd.RunAttach("git", "commit", "-m", m)
+	e = tools.RunAttach("git", "commit", "-m", m)
 	if e != nil {
 		fmt.Println(e)
 		return
@@ -29,19 +29,19 @@ func main() {
 
 	//tag
 	if *tag != "" {
-		e = cmd.RunAttach("git", "tag", "-a", *tag, "-m", m)
+		e = tools.RunAttach("git", "tag", "-a", *tag, "-m", m)
 		if e != nil {
 			fmt.Println("add tag error :", e)
 			return
 		}
 	}
 
-	e = cmd.RunAttach("git", "push")
+	e = tools.RunAttach("git", "push")
 	if e != nil {
 		fmt.Println(e)
 		return
 	}
-	e = cmd.RunAttach("git", "push", "--tags")
+	e = tools.RunAttach("git", "push", "--tags")
 	if e != nil {
 		fmt.Println(e)
 		return
