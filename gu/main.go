@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/stevenzack/cmd/tools"
+	"github.com/stevenzack/cmd/internal/tools"
 )
 
 var branch = flag.String("b", "master", "branch")

@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/stevenzack/cmd/tools"
+	"github.com/stevenzack/cmd/internal/tools"
 )
 
 func main() {
