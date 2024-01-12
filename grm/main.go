@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	args := []string{"run", "-tags", "gtk_3_18", "main.go"}
+	args := []string{"run", "main.go"}
 	args = append(args, os.Args[1:]...)
 	e := tools.RunAttach("go", args...)
 	if e != nil {
