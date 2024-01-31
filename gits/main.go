@@ -35,6 +35,9 @@ func main() {
 			return
 		}
 		for _, item := range list {
+			if !item.IsDir() {
+				continue
+			}
 			if _, e := os.Stat(item.Name() + "/.git"); os.IsNotExist(e) {
 				continue
 			}
