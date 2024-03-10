@@ -34,6 +34,7 @@ func main() {
 			log.Println(e)
 			return
 		}
+		hasFound:=false
 		for _, item := range list {
 			if !item.IsDir() {
 				continue
@@ -46,6 +47,7 @@ func main() {
 				log.Println(e, item.Name())
 				continue
 			}
+			hasFound=true
 			println(divider, item.Name(), divider)
 			e = tools.RunAttach("git", arg)
 			if e != nil {
@@ -56,6 +58,13 @@ func main() {
 			if e != nil {
 				log.Println(e, pwd)
 				continue
+			}
+		}
+		if !hasFound{
+			e = tools.RunAttach("git", arg)
+			if e != nil {
+				log.Println(e)
+				return
 			}
 		}
 		return
