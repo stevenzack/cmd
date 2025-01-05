@@ -1,3 +1,3 @@
 module github.com/stevenzack/cmd
 
-go 1.18
+go 1.12

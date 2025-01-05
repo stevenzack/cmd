@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"strings"
@@ -29,12 +30,12 @@ func main() {
 	}
 	const divider = "------------"
 	if _, e := os.Stat(".git"); os.IsNotExist(e) {
-		list, e := os.ReadDir(".")
+		list, e := ioutil.ReadDir(".")
 		if e != nil {
 			log.Println(e)
 			return
 		}
-		hasFound:=false
+		hasFound := false
 		for _, item := range list {
 			if !item.IsDir() {
 				continue
@@ -47,7 +48,7 @@ func main() {
 				log.Println(e, item.Name())
 				continue
 			}
-			hasFound=true
+			hasFound = true
 			println(divider, item.Name(), divider)
 			e = tools.RunAttach("git", arg)
 			if e != nil {
@@ -60,7 +61,7 @@ func main() {
 				continue
 			}
 		}
-		if !hasFound{
+		if !hasFound {
 			e = tools.RunAttach("git", arg)
 			if e != nil {
 				log.Println(e)
@@ -71,7 +72,7 @@ func main() {
 	}
 
 	if _, e := os.Stat("go.mod"); e == nil {
-		b, e := os.ReadFile("go.mod")
+		b, e := ioutil.ReadFile("go.mod")
 		if e != nil {
 			log.Println(e)
 			return
